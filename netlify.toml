@@ -1,6 +1,6 @@
 # Netlify configuration for Nuxt 3 project
 [build]
-  command = "npm run build"
+  command = "npm run generate"
   publish = ".output/public"
   functions = ".netlify/functions"
 

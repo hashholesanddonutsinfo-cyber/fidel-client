@@ -33,6 +33,7 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted, watch } from 'vue'
+const loading = ref(true)
 import axios from 'axios'
 import { useRouter } from 'vue-router'
 
@@ -202,6 +203,8 @@ onMounted(async () => {
   } catch (err) {
     console.error('Failed to fetch products:', err)
     products.value = dummyProducts
+  } finally {
+    loading.value = false
   }
 })
 </script>
