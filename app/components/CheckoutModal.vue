@@ -148,14 +148,12 @@
         </div>
         <button
           id="confirm-order-btn"
-          class="w-full py-3 rounded font-bold text-lg mt-8 transition-colors duration-200"
-          :class="[submitting || !isFormValid ? 'bg-gray-400 cursor-not-allowed text-gray-200' : 'bg-[#263c1e] text-white hover:bg-[#1a2a13] cursor-pointer']"
-          :disabled="submitting || !isFormValid"
-          @click="submitting || !isFormValid ? null : submitOrder"
+          class="w-full py-3 rounded font-bold text-lg mt-8 transition-colors duration-200 bg-[#263c1e] text-white hover:bg-[#1a2a13] cursor-pointer"
+          :disabled="submitting"
+          @click="submitOrder"
         >
           {{ submitting ? 'Submitting...' : 'Confirm Order' }}
         </button>
-        <div v-if="showTooltip" class="mt-2 text-sm text-red-600 text-center bg-white border border-red-300 rounded shadow p-2">Fill all required fields to confirm your order.</div>
         <div v-if="successMessage" class="mt-4 text-green-700 font-semibold text-center">{{ successMessage }}</div>
       </div>
     </div>
@@ -193,27 +191,7 @@ import axios from 'axios';
 const submitting = ref(false);
 const successMessage = ref('');
 const showTooltip = ref(false);
-function handleDisabledClick(e) {
-  if (submitting.value || !isFormValid.value) {
-    e.preventDefault();
-    showTooltip.value = true;
-    setTimeout(() => { showTooltip.value = false; }, 2000);
-  }
-}
-onMounted(() => {
-  const btn = document.getElementById('confirm-order-btn');
-  if (btn) {
-    btn.addEventListener('click', handleDisabledClick, true);
-    btn.addEventListener('mouseenter', handleDisabledClick, true);
-  }
-});
-onUnmounted(() => {
-  const btn = document.getElementById('confirm-order-btn');
-  if (btn) {
-    btn.removeEventListener('click', handleDisabledClick, true);
-    btn.removeEventListener('mouseenter', handleDisabledClick, true);
-  }
-});
+// Removed manual event listeners for confirm order button. Vue's native click handling will ensure submitOrder is called when the button is active.
 
 const requiredFields = [
   'firstName', 'lastName', 'country', 'streetAddress', 'city', 'state', 'zip', 'phone', 'email'
@@ -253,14 +231,18 @@ async function submitOrder() {
       orderNotes: form.value.orderNotes
     };
     await axios.post('https://fidel-of6u.onrender.com/api/orders', payload);
-    successMessage.value = 'Your order has been confirmed, we will contact you with further instructions.';
-    setTimeout(() => {
-      successMessage.value = '';
-      emit('close');
-      if (typeof window !== 'undefined') {
-        window.dispatchEvent(new CustomEvent('clear-cart'));
-      }
-    }, 2500);
+    // Use local toast logic: dispatch a custom event for productDetail/[id].vue to handle
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new CustomEvent('order-success-toast', {
+        detail: {
+          message: 'Your order has been confirmed, we will contact you with further instructions.',
+          icon: 'pi pi-check-circle',
+          duration: 2500
+        }
+      }));
+      window.dispatchEvent(new CustomEvent('clear-cart'));
+    }
+    emit('close');
   } catch (err) {
     alert('Order failed. Please try again.');
   } finally {

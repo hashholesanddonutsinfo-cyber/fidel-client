@@ -19,10 +19,11 @@
   </Head>
   <section class="w-full bg-white min-h-screen py-8">
     <Toast :message="toastMessage" :icon="toastIcon" :duration="toastDuration" :show="showToast" @close="showToast = false" />
+    <OrderContactModal :visible="showOrderContactModal" @close="showOrderContactModal = false" />
     <!-- Overlay for Cart Sidebar (mobile & desktop) -->
-  <div v-if="showCart" class="fixed inset-0 bg-black bg-opacity-30 z-40" @click="showCart = false"></div>
+    <div v-if="showCart" class="fixed inset-0 bg-black bg-opacity-30 z-[10000]" @click="showCart = false"></div>
     <!-- Cart Sidebar for mobile & desktop -->
-    <CartSidebar :visible="showCart" @close="showCart = false" />
+    <CartSidebar :visible="showCart" @close="showCart = false" class="z-[10001]" />
     <Loader v-if="loading" />
     <template v-else>
       <!-- Mobile Header -->
@@ -63,7 +64,7 @@
         <h1 class="text-xl font-bold mt-4">{{ product.title }} <span class="text-base font-normal">| {{ product.weight }}</span></h1>
   <!-- Ensure product.title is always present and fallback to a default if missing -->
   <h1 class="text-xl font-bold mt-4">{{ product.title || 'Product' }} <span class="text-base font-normal">| {{ product.weight }}</span></h1>
-  <div class="text-green-700 font-semibold mb-2">View more from {{ product.brand }} →</div>
+  <div class="text-green-700 font-semibold mb-2">Product from {{ product.brand }} →</div>
         <span class="bg-green-100 text-green-700 px-2 py-1 rounded text-xs font-bold">{{ product.type }}</span>
         <div class="flex items-center gap-2 mt-2 mb-2">
           <!-- Review Stars -->
@@ -79,20 +80,7 @@
         </div>
         <div class="text-xs text-gray-500 mb-2">Tax Incl.</div>
         <div class="mb-4">
-          <div class="text-xs text-gray-500 mb-1">Chemical content</div>
-          <div class="flex gap-4 text-xs">
-            <span>THC: <span class="font-bold">{{ product.thc }}</span></span>
-            <span>CBD: <span class="font-bold">{{ product.cbd }}</span></span>
-            <span>THC/$: <span class="font-bold">{{ product.thcPerDollar }}</span></span>
-            <span>CBD/$: <span class="font-bold">{{ product.cbdPerDollar }}</span></span>
-          </div>
-        </div>
-        <div class="flex items-center gap-2 mb-4">
-          <input type="checkbox" id="compare" class="mr-2" />
-          <label for="compare" class="text-xs text-gray-700">Add to compare</label>
-        </div>
-        <div class="mb-4">
-          <h2 class="text-base font-bold mb-2">{{ product.title }} is known for its savory and tart profiles. This hybrid strain offers a complex blend of profiles, giving lemon, citrus, and diesel notes.</h2>
+          <h2 class="text-base font-bold mb-2">{{ product.title }} <span class="font-normal text-sm">{{ product.description }} </span> </h2>
           <div class="text-xs text-gray-700 mb-2">About the Brand</div>
           <img src="/images/photo7.jpg" alt="Brand Logo" class="h-8 mb-2" />
           <p class="text-xs text-gray-700">Fidels is known as an innovative, award-winning, California-based cannabis brand. Founded in 2017 as a pioneering vape company, Fidels evolved into so much more. Today, Fidels has become one of the world's most treasured cannabis brands with its class defining retail stores and amazing cannabis products. Always innovating, always inspiring, always influencing: that's Fidels.</p>
@@ -107,8 +95,7 @@
           <div class="text-xs font-bold mb-1">WARNING:</div>
           <p class="text-xs text-gray-700">This product can expose you to chemicals, including Cannabis Smoke, which are known to the State of California to cause cancer and birth defects or other reproductive harm. For more information go to <a href="https://www.P65Warnings.ca.gov" class="text-green-600 underline">www.P65Warnings.ca.gov</a></p>
         </div>
-        <div class="fixed bottom-0 left-0 w-full bg-white border-t flex items-center justify-between px-4 py-3 z-50">
-          <button class="border border-gray-300 rounded px-4 py-3 text-gray-700 text-lg"><i class="pi pi-heart"></i></button>
+        <div v-if="!showCart" class="fixed bottom-0 left-0 w-full bg-white border-t flex items-center justify-between px-4 py-3">
           <button class="bg-green-600 text-white px-8 py-3 rounded font-bold flex items-center gap-2 text-lg w-full mx-2" @click="addToCart" :disabled="loadingCart">
             <i class="pi pi-shopping-cart"></i>
             <span v-if="!loadingCart">Add to cart</span>
@@ -116,7 +103,6 @@
           </button>
           <button class="bg-yellow-500 text-white px-8 py-3 rounded font-bold flex items-center gap-2 text-lg w-full mx-2">Buy now</button>
         </div>
-        <div class="text-xs text-gray-500 mb-2 mt-16">You're only $75.00 away from free delivery!</div>
       </div>
       <!-- Desktop Product Details -->
       <div class="hidden md:grid max-w-6xl mx-auto grid-cols-1 md:grid-cols-2 gap-12 items-start px-4">
@@ -137,7 +123,7 @@
             <h1 class="text-2xl md:text-3xl font-bold">{{ product.title || 'Product' }}</h1>
             <span class="text-base font-normal">| {{ product.weight }}</span>
           </div>
-          <div class="text-green-700 font-semibold mb-2 cursor-pointer">View more from {{ product.brand }} →</div>
+          <div class="text-green-700 font-semibold mb-2 cursor-pointer">Product from {{ product.brand }}</div>
           <div class="flex items-center gap-2 mb-4">
             <span class="bg-green-100 text-green-700 px-2 py-1 rounded text-xs font-bold">{{ product.type }}</span>
             <span v-if="product.sale" class="bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs font-bold">SALE</span>
@@ -147,17 +133,7 @@
             <span v-if="product.oldPrice" class="text-lg text-gray-400 line-through">{{ product.oldPrice }}</span>
           </div>
           <div class="text-xs text-gray-500 mb-2">Tax Incl.</div>
-          <div class="mb-4">
-            <div class="text-xs text-gray-500 mb-1">Chemical content</div>
-            <div class="flex gap-4 text-xs">
-              <span>THC: <span class="font-bold">{{ product.thc }}</span></span>
-              <span>CBD: <span class="font-bold">{{ product.cbd }}</span></span>
-              <span>THC/$: <span class="font-bold">{{ product.thcPerDollar }}</span></span>
-              <span>CBD/$: <span class="font-bold">{{ product.cbdPerDollar }}</span></span>
-            </div>
-          </div>
           <div class="flex items-center gap-4 mb-4">
-            <button class="border border-gray-300 rounded px-4 py-3 text-gray-700 text-lg"><i class="pi pi-heart"></i></button>
             <!-- Quantity Selector -->
             <div class="flex items-center gap-2">
               <button @click="decreaseQty" class="bg-gray-200 text-gray-700 px-3 py-2 rounded text-lg font-bold">-</button>
@@ -171,13 +147,8 @@
             </button>
             <button class="bg-yellow-500 text-white px-8 py-3 rounded font-bold flex items-center gap-2 text-lg">Buy now</button>
           </div>
-          <div class="text-xs text-gray-500 mb-2">You're only $75.00 away from free delivery!</div>
-          <div class="flex items-center gap-2 mb-4">
-            <input type="checkbox" id="compare" class="mr-2" />
-            <label for="compare" class="text-xs text-gray-700">Add to compare</label>
-          </div>
           <div class="mt-6">
-            <h2 class="text-base font-bold mb-2">{{ product.title }} is known for its savory and tart profiles. This hybrid strain offers a complex blend of profiles, giving lemon, citrus, and diesel notes.</h2>
+            <h2 class="text-base font-bold mb-2">{{ product.title }}, <span class="font-normal text-sm"> {{ product.description }} </span></h2>
             <div class="text-xs text-gray-700 mb-2">About the Brand</div>
             <img src="/images/photo7.jpg" alt="Brand Logo" class="h-8 mb-2" />
             <p class="text-xs text-gray-700">Fidels is known as an innovative, award-winning, California-based cannabis brand. Founded in 2017 as a pioneering vape company, Fidels evolved into so much more. Today, Fidels has become one of the world's most treasured cannabis brands with its class defining retail stores and amazing cannabis products. Always innovating, always inspiring, always influencing: that's Fidels.</p>
@@ -217,17 +188,19 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import CartSidebar from '../../components/CartSidebar.vue'
-const showCart = ref(false)
 import axios from 'axios'
 import { useRoute } from 'vue-router'
 import Loader from '~/components/Loader.vue'
 import { useHead } from '@vueuse/head'
-
 import Toast from '~/components/Toast.vue'
+import OrderContactModal from '~/components/OrderContactModal.vue'
+
+const showCart = ref(false)
 const showToast = ref(false)
 const toastMessage = ref('')
 const toastIcon = ref('pi pi-check-circle')
 const toastDuration = ref(2500)
+const showOrderContactModal = ref(false)
 
 const route = useRoute()
 const product = ref({
@@ -289,6 +262,16 @@ async function addToCart() {
   }
 }
 
+onMounted(() => {
+  window.addEventListener('order-success-toast', (e: any) => {
+    toastMessage.value = e.detail.message
+    toastIcon.value = e.detail.icon || 'pi pi-check-circle'
+    toastDuration.value = e.detail.duration || 2500
+    showToast.value = true
+    showOrderContactModal.value = true
+  })
+})
+
 onMounted(async () => {
   const id = route.params.id
   try {
@@ -298,7 +281,7 @@ onMounted(async () => {
       title: p.name || '',
       weight: p.weight || '1gram',
       brand: p.brand || 'Fidels',
-      type: p.type || '',
+      type: p.category.name || '',
       sale: !!p.sale || !!p.discount,
       price: p.price ? `$${p.price}` : '',
       oldPrice: p.oldPrice ? `$${p.oldPrice}` : '',

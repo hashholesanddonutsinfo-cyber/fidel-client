@@ -1,6 +1,6 @@
 <template>
   <transition name="cart-slide-fade">
-    <div v-if="visible" class="fixed top-0 right-0 w-80 h-full bg-white shadow-lg z-50 flex flex-col">
+  <div v-if="visible" class="fixed top-0 right-0 w-80 h-full bg-white shadow-lg z-[10002] flex flex-col" style="pointer-events: auto;">
       <div class="flex items-center justify-between p-4 border-b">
         <h2 class="text-lg font-bold">Your Cart</h2>
         <button @click="close" class="text-gray-500 hover:text-gray-700">

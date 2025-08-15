@@ -1,9 +1,13 @@
 <template>
   <nav class="w-full sticky top-0 z-50 bg-white">
     <!-- Shipping Banner -->
-    <div class="bg-black text-white py-3 text-center font-medium text-sm tracking-wide">
-      <div class="container mx-auto px-4">
+    <div class="bg-black text-white py-3 font-medium text-sm tracking-wide">
+      <div class="container mx-auto px-4 flex items-center justify-between">
         <p class="m-0 font-sans text-xs sm:text-sm">25% DISCOUNT ON ORDERS OVER $100</p>
+        <a href="tel:+17182185533" class="ml-auto flex items-center font-semibold text-xs sm:text-sm hover:underline">
+          <i class="pi pi-phone mr-1"></i>
+          +1 718-218-5533
+        </a>
       </div>
     </div>
 
