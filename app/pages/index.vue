@@ -18,7 +18,7 @@ import MainVideo from '~/components/MainVideo.vue';
 
 // SEO meta tags
 useHead({
-  title: '',
+  title: 'Buy Fidels Product Cheap Price - Fidels Hash Hole',
   meta: [
     { name: 'description', content: 'Shop HashHoles for the best cannabis products:flowers, vapes, edibles, prerolls, concentrates, and more. Fast California delivery. Trusted lifestyle brand.' },
     { name: 'keywords', content: 'hashholes, cannabis, weed, fidels, fidelsclothings, fidelclothing, fidel, clothing, fidel events, events, products, hash and holes, Buy Fidels Product Cheap Price - Fidels Hash Hole hash, holes,, vapes, edibles, prerolls, concentrates, CA delivery, buy weed, fidels, fidelsclothings, fidelclothing, fidel, clothing, fidel events, events, products, hash and holes, hash, holes, online, premium cannabis' },

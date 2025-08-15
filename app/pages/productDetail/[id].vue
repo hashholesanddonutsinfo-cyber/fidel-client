@@ -1,4 +1,5 @@
 <template>
+  <AppNavigation />
   <Head>
     <title>{{ product.title }} | HashHoles</title>
     <meta name="description" :content="product.description || 'Premium cannabis product from HashHoles. Fast CA delivery.'" />
@@ -60,7 +61,9 @@
           </div>
         </div>
         <h1 class="text-xl font-bold mt-4">{{ product.title }} <span class="text-base font-normal">| {{ product.weight }}</span></h1>
-        <div class="text-green-700 font-semibold mb-2">View more from {{ product.brand }} →</div>
+  <!-- Ensure product.title is always present and fallback to a default if missing -->
+  <h1 class="text-xl font-bold mt-4">{{ product.title || 'Product' }} <span class="text-base font-normal">| {{ product.weight }}</span></h1>
+  <div class="text-green-700 font-semibold mb-2">View more from {{ product.brand }} →</div>
         <span class="bg-green-100 text-green-700 px-2 py-1 rounded text-xs font-bold">{{ product.type }}</span>
         <div class="flex items-center gap-2 mt-2 mb-2">
           <!-- Review Stars -->
@@ -131,7 +134,7 @@
         <!-- ...existing code for desktop details... -->
         <div>
           <div class="flex items-center gap-2 mb-2">
-            <h1 class="text-2xl md:text-3xl font-bold">{{ product.title }}</h1>
+            <h1 class="text-2xl md:text-3xl font-bold">{{ product.title || 'Product' }}</h1>
             <span class="text-base font-normal">| {{ product.weight }}</span>
           </div>
           <div class="text-green-700 font-semibold mb-2 cursor-pointer">View more from {{ product.brand }} →</div>
