@@ -1,4 +1,21 @@
 <template>
+  <Head>
+    <title>{{ product.title }} | HashHoles</title>
+    <meta name="description" :content="product.description || 'Premium cannabis product from HashHoles. Fast CA delivery.'" />
+    <meta name="keywords" content="hashholes, cannabis, weed, fidels, fidelsclothings, fidelclothing, fidel, clothing, fidel events, events, products, hash and holes, hash, holes,, vapes, edibles, prerolls, concentrates, CA delivery, buy weed, fidels, fidelsclothings, fidelclothing, fidel, clothing, fidel events, events, products, hash and holes, hash, holes, online, premium cannabis, {{ product.title }}" />
+    <meta property="og:title" :content="product.title + ' | HashHoles'" />
+    <meta property="og:description" :content="product.description || 'Premium cannabis product from HashHoles. Fast CA delivery.'" />
+    <meta property="og:image" :content="product.images[0] || 'https://cdn.shopify.com/s/files/1/0276/6569/4860/files/FIDELS_GREEN_LOGO.png?height=628&pad_color=ffffff&v=1733808591&width=1200'" />
+    <meta property="og:type" content="product" />
+    <meta property="og:url" :content="'https://fidelsclothings.com/productDetail/' + $route.params.id" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" :content="product.title + ' | HashHoles'" />
+    <meta name="twitter:description" :content="product.description || 'Premium cannabis product from HashHoles. Fast CA delivery.'" />
+    <meta name="twitter:image" :content="product.images[0] || 'https://cdn.shopify.com/s/files/1/0276/6569/4860/files/FIDELS_GREEN_LOGO.png?height=628&pad_color=ffffff&v=1733808591&width=1200'" />
+    <link rel="canonical" :href="'https://fidelsclothings.com/productDetail/' + $route.params.id" />
+    <meta name="robots" content="index, follow" />
+    <meta name="author" content="HashHoles" />
+  </Head>
   <section class="w-full bg-white min-h-screen py-8">
     <Toast :message="toastMessage" :icon="toastIcon" :duration="toastDuration" :show="showToast" @close="showToast = false" />
     <!-- Overlay for Cart Sidebar (mobile & desktop) -->
@@ -46,6 +63,13 @@
         <div class="text-green-700 font-semibold mb-2">View more from {{ product.brand }} →</div>
         <span class="bg-green-100 text-green-700 px-2 py-1 rounded text-xs font-bold">{{ product.type }}</span>
         <div class="flex items-center gap-2 mt-2 mb-2">
+          <!-- Review Stars -->
+          <div class="flex items-center mb-2">
+            <span v-for="star in 5" :key="star" class="text-yellow-400 text-xl">
+              <i :class="star <= (product.rating || 5) ? 'pi pi-star-fill' : 'pi pi-star'" />
+            </span>
+            <span v-if="product.rating" class="ml-2 text-xs text-gray-500">({{ product.rating }})</span>
+          </div>
           <span class="text-2xl font-bold text-green-700">{{ product.price }}</span>
           <span v-if="product.oldPrice" class="text-lg text-gray-400 line-through">{{ product.oldPrice }}</span>
           <span v-if="product.sale" class="bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs font-bold">SALE</span>
@@ -68,7 +92,7 @@
           <h2 class="text-base font-bold mb-2">{{ product.title }} is known for its savory and tart profiles. This hybrid strain offers a complex blend of profiles, giving lemon, citrus, and diesel notes.</h2>
           <div class="text-xs text-gray-700 mb-2">About the Brand</div>
           <img src="/images/photo7.jpg" alt="Brand Logo" class="h-8 mb-2" />
-          <p class="text-xs text-gray-700">STIIIZY is known as an innovative, award-winning, California-based cannabis brand. Founded in 2017 as a pioneering vape company, STIIIZY evolved into so much more. Today, STIIIZY has become one of the world's most treasured cannabis brands with its class defining retail stores and amazing cannabis products. Always innovating, always inspiring, always influencing: that's STIIIZY.</p>
+          <p class="text-xs text-gray-700">Fidels is known as an innovative, award-winning, California-based cannabis brand. Founded in 2017 as a pioneering vape company, Fidels evolved into so much more. Today, Fidels has become one of the world's most treasured cannabis brands with its class defining retail stores and amazing cannabis products. Always innovating, always inspiring, always influencing: that's Fidels.</p>
           <span class="text-green-600 text-xs cursor-pointer">See More</span>
         </div>
         <div class="mb-4">
@@ -153,7 +177,7 @@
             <h2 class="text-base font-bold mb-2">{{ product.title }} is known for its savory and tart profiles. This hybrid strain offers a complex blend of profiles, giving lemon, citrus, and diesel notes.</h2>
             <div class="text-xs text-gray-700 mb-2">About the Brand</div>
             <img src="/images/photo7.jpg" alt="Brand Logo" class="h-8 mb-2" />
-            <p class="text-xs text-gray-700">STIIIZY is known as an innovative, award-winning, California-based cannabis brand. Founded in 2017 as a pioneering vape company, STIIIZY evolved into so much more. Today, STIIIZY has become one of the world's most treasured cannabis brands with its class defining retail stores and amazing cannabis products. Always innovating, always inspiring, always influencing: that's STIIIZY.</p>
+            <p class="text-xs text-gray-700">Fidels is known as an innovative, award-winning, California-based cannabis brand. Founded in 2017 as a pioneering vape company, Fidels evolved into so much more. Today, Fidels has become one of the world's most treasured cannabis brands with its class defining retail stores and amazing cannabis products. Always innovating, always inspiring, always influencing: that's Fidels.</p>
             <span class="text-green-600 text-xs cursor-pointer">See More</span>
           </div>
           <div class="mt-6">
@@ -176,7 +200,7 @@
             <div class="w-full flex items-center justify-center" style="height:208px;">
               <img :src="product.images[0]" alt="Product" class="w-full h-full object-contain mb-2" />
             </div>
-            <div class="font-bold text-sm mb-1">STIIIZY</div>
+            <div class="font-bold text-sm mb-1">Fidels</div>
             <div class="text-xs text-gray-500 mb-1">Hybrid • THC Pod</div>
             <div class="text-green-700 font-bold text-lg mb-1">$20 <span class="text-gray-400 line-through text-sm">$25</span></div>
             <button class="bg-green-600 text-white px-3 py-1 rounded text-xs font-bold flex items-center gap-1"><i class="pi pi-plus"></i></button>
@@ -194,6 +218,7 @@ const showCart = ref(false)
 import axios from 'axios'
 import { useRoute } from 'vue-router'
 import Loader from '~/components/Loader.vue'
+import { useHead } from '@vueuse/head'
 
 import Toast from '~/components/Toast.vue'
 const showToast = ref(false)
@@ -269,7 +294,7 @@ onMounted(async () => {
     product.value = {
       title: p.name || '',
       weight: p.weight || '1gram',
-      brand: p.brand || 'STIIIZY',
+      brand: p.brand || 'Fidels',
       type: p.type || '',
       sale: !!p.sale || !!p.discount,
       price: p.price ? `$${p.price}` : '',
@@ -286,6 +311,28 @@ onMounted(async () => {
   } finally {
     loading.value = false
   }
+})
+
+useHead({
+  title: product.value.title + ' | HashHoles',
+  meta: [
+    { name: 'description', content: product.value.description || 'Premium cannabis product from HashHoles. Fast CA delivery.' },
+    { name: 'keywords', content: 'hashholes, cannabis, weed, fidels, fidelsclothings, fidelclothing, fidel, clothing, fidel events, events, products, hash and holes, hash, holes,, vapes, edibles, prerolls, concentrates, CA delivery, buy weed, fidels, fidelsclothings, fidelclothing, fidel, clothing, fidel events, events, products, hash and holes, hash, holes, online, premium cannabis, ' + product.value.title },
+    { property: 'og:title', content: product.value.title + ' | HashHoles' },
+    { property: 'og:description', content: product.value.description || 'Premium cannabis product from HashHoles. Fast CA delivery.' },
+    { property: 'og:image', content: product.value.images[0] || 'https://cdn.shopify.com/s/files/1/0276/6569/4860/files/FIDELS_GREEN_LOGO.png?height=628&pad_color=ffffff&v=1733808591&width=1200' },
+    { property: 'og:type', content: 'product' },
+    { property: 'og:url', content: 'https://hashholes.com/productDetail/' + route.params.id },
+    { name: 'twitter:card', content: 'summary_large_image' },
+    { name: 'twitter:title', content: product.value.title + ' | HashHoles' },
+    { name: 'twitter:description', content: product.value.description || 'Premium cannabis product from HashHoles. Fast CA delivery.' },
+    { name: 'twitter:image', content: product.value.images[0] || 'https://cdn.shopify.com/s/files/1/0276/6569/4860/files/FIDELS_GREEN_LOGO.png?height=628&pad_color=ffffff&v=1733808591&width=1200' },
+    { name: 'robots', content: 'index, follow' },
+    { name: 'author', content: 'Fidels' }
+  ],
+  link: [
+    { rel: 'canonical', href: 'https://hashholes.com/productDetail/' + route.params.id }
+  ]
 })
 </script>
 

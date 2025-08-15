@@ -72,6 +72,12 @@ let intervalId: NodeJS.Timeout | null = null
 
 const images = ref([
   {
+    src: '/images/carousel.jpg',
+    alt: 'Premium Products',
+    title: 'Premium Quality',
+    description: 'Discover our finest selection'
+  },
+  {
     src: '/images/photo4.jpg',
     alt: 'Premium Products',
     title: 'Premium Quality',

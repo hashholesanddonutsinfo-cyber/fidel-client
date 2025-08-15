@@ -15,24 +15,32 @@
 <script setup lang="ts">
 const categories = [
   {
-    name: 'BATTERIES',
-    image: '/images/photo7.jpg',
+    name: 'Tickets',
+    image: '/images/cat5.jpg',
   },
   {
-    name: 'PODS',
-    image: '/images/photo8.jpg',
+    name: 'HashHoles',
+    image: '/images/cat1.jpg',
   },
   {
-    name: 'FLOWERS',
-    image: '/images/photo9.jpg',
+    name: '70/30 prerolls',
+    image: '/images/cat2.jpg',
   },
   {
-    name: 'EXTRACTS',
-    image: '/images/photo10.jpg',
+    name: 'Rosin 2G jars',
+    image: '/images/cat3.jpg',
   },
   {
-    name: 'EDIBLES',
-    image: '/images/photo11.jpg',
+    name: 'Flowers',
+    image: '/images/cat4.jpg',
+  },
+  {
+    name: 'Events',
+    image: '/images/carousel.jpg',
+  },
+  {
+    name: 'Sponsorships',
+    image: '/images/cat6.jpg',
   },
 ]
 </script>

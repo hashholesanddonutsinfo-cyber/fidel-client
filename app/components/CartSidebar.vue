@@ -32,16 +32,18 @@
         </div>
       </div>
       <div class="p-4 border-t">
-        <button v-if="cartItems.length > 0" class="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700">
+        <button v-if="cartItems.length > 0" class="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700" @click="showCheckout = true">
           Checkout
         </button>
       </div>
+      <CheckoutModal :visible="showCheckout" :cartItems="cartItems" @close="showCheckout = false" />
     </div>
   </transition>
 </template>
 
 <script setup lang="ts">
 import { ref, watch, onMounted } from 'vue';
+import CheckoutModal from './CheckoutModal.vue';
 import axios from 'axios';
 
 const props = defineProps<{ visible: boolean }>();
@@ -49,6 +51,7 @@ const emit = defineEmits(['close']);
 
 const cartItems = ref<any[]>([]);
 const loading = ref(false);
+const showCheckout = ref(false);
 
 function getSessionId() {
   let sessionId = localStorage.getItem('sessionId');
@@ -94,6 +97,21 @@ watch(() => props.visible, (val: boolean) => {
 
 onMounted(() => {
   if (props.visible) fetchCart();
+  if (typeof window !== 'undefined') {
+    window.addEventListener('clear-cart', async () => {
+      // Clear cart on backend
+      try {
+        const res = await axios.get(`https://fidel-of6u.onrender.com/api/carts?sessionId=${getSessionId()}`);
+        const cart = Array.isArray(res.data) ? res.data.find((c: any) => c.sessionId === getSessionId()) : res.data;
+        if (cart && cart._id) {
+          await axios.put(`https://fidel-of6u.onrender.com/api/carts/${cart._id}`, { products: [] });
+        }
+        cartItems.value = [];
+      } catch (err) {
+        // handle error
+      }
+    });
+  }
 });
 </script>
 

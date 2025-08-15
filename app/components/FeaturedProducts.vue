@@ -18,6 +18,13 @@
           <img :src="product.images && productImageIndexes[productIndex] !== undefined ? product.images[productImageIndexes[productIndex]] : product.image" :alt="product.title" class="h-28 md:h-36 w-full object-contain mb-2 rounded-lg border border-gray-100" style="max-height:9rem; min-height:7rem;" />
           <div class="text-xs text-gray-400 uppercase mb-0.5 truncate w-full text-center">{{ getCategoryName(product.category) }}</div>
           <div class="font-bold text-lg mb-0.5 truncate w-full text-center" title="{{ product.title }}">{{ product.title }}</div>
+          <!-- Review Stars -->
+          <div class="flex items-center mb-2">
+            <span v-for="star in 5" :key="star" class="text-yellow-400 text-lg">
+              <i :class="star <= (product.rating || 5) ? 'pi pi-star-fill' : 'pi pi-star'" />
+            </span>
+            <span v-if="product.rating" class="ml-2 text-xs text-gray-500">({{ product.rating }})</span>
+          </div>
           <div class="border-b border-dashed border-gray-300 w-full my-2"></div>
           <div class="text-green-700 font-bold text-xl mb-1">{{ product.price }}</div>
           <div class="text-xs text-gray-500 mb-2">Tax included</div>
