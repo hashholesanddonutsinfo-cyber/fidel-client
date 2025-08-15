@@ -23,7 +23,7 @@
     <!-- Overlay for Cart Sidebar (mobile & desktop) -->
     <div v-if="showCart" class="fixed inset-0 bg-black bg-opacity-30 z-[10000]" @click="showCart = false"></div>
     <!-- Cart Sidebar for mobile & desktop -->
-    <CartSidebar :visible="showCart" @close="showCart = false" class="z-[10001]" />
+    <CartSidebar :visible="showCart" :showCheckout="showCheckout" @close="showCart = false" @close-checkout="showCheckout = false" class="z-[10001]" />
     <Loader v-if="loading" />
     <template v-else>
       <!-- Mobile Header -->
@@ -31,12 +31,6 @@
         <div class="flex items-center gap-4">
           <button class="text-2xl text-gray-700" @click="$router.back()"><i class="pi pi-arrow-left"></i></button>
           <img src="/images/photo7.jpg" alt="Brand Logo" class="h-8" />
-        </div>
-        <div class="flex items-center gap-4">
-          <button class="text-2xl text-gray-700"><i class="pi pi-search"></i></button>
-          <button class="text-2xl text-gray-700"><i class="pi pi-heart"></i></button>
-          <button class="text-2xl text-gray-700"><i class="pi pi-user"></i></button>
-          <button class="text-2xl text-gray-700" @click="showCart = true"><i class="pi pi-shopping-cart"></i></button>
         </div>
       </div>
       <!-- Desktop Header -->
@@ -47,11 +41,7 @@
           </button>
           <img src="/images/photo7.jpg" alt="Brand Logo" class="h-8" />
         </div>
-        <div class="flex items-center gap-6">
-          <button class="text-2xl text-gray-700 hover:text-green-600"><i class="pi pi-heart"></i></button>
-          <button class="text-2xl text-gray-700 hover:text-green-600"><i class="pi pi-user"></i></button>
-          <button class="text-2xl text-gray-700 hover:text-green-600" @click="showCart = true"><i class="pi pi-shopping-cart"></i></button>
-        </div>
+
       </div>
       <!-- Mobile Product Details -->
       <div class="md:hidden px-4">
@@ -80,20 +70,36 @@
         </div>
         <div class="text-xs text-gray-500 mb-2">Tax Incl.</div>
         <div class="mb-4">
-          <h2 class="text-base font-bold mb-2">{{ product.title }} <span class="font-normal text-sm">{{ product.description }} </span> </h2>
+          <h2 class="text-base font-bold mb-2">{{ product.title }}</h2>
+          <div class="font-normal text-sm">
+            <span v-if="!showFullDescription">{{ product.description.slice(0, 120) }}<span v-if="product.description.length > 120">...</span></span>
+            <span v-else>{{ product.description }}</span>
+            <span v-if="product.description.length > 120 && !showFullDescription" class="text-green-600 text-xs cursor-pointer" @click="showFullDescription = true">See More</span>
+            <span v-if="showFullDescription" class="text-green-600 text-xs cursor-pointer" @click="showFullDescription = false">See Less</span>
+          </div>
           <div class="text-xs text-gray-700 mb-2">About the Brand</div>
           <img src="/images/photo7.jpg" alt="Brand Logo" class="h-8 mb-2" />
-          <p class="text-xs text-gray-700">Fidels is known as an innovative, award-winning, California-based cannabis brand. Founded in 2017 as a pioneering vape company, Fidels evolved into so much more. Today, Fidels has become one of the world's most treasured cannabis brands with its class defining retail stores and amazing cannabis products. Always innovating, always inspiring, always influencing: that's Fidels.</p>
-          <span class="text-green-600 text-xs cursor-pointer">See More</span>
+          <p class="text-xs text-gray-700">
+            <span v-if="!showFullBrand">{{ brandText.slice(0, 120) }}<span v-if="brandText.length > 120">...</span></span>
+            <span v-else>{{ brandText }}</span>
+            <span v-if="brandText.length > 120 && !showFullBrand" class="text-green-600 text-xs cursor-pointer" @click="showFullBrand = true">See More</span>
+            <span v-if="showFullBrand" class="text-green-600 text-xs cursor-pointer" @click="showFullBrand = false">See Less</span>
+          </p>
         </div>
         <div class="mb-4">
           <div class="text-xs font-bold mb-1">Disclaimer:</div>
           <ul class="text-xs text-gray-700 list-disc ml-4 mb-2">
-            <li>An empty integrated cannabis vaporizer shall be properly disposed of as a hazardous waste at a household hazardous waste collection facility or other approved facility.</li>
-            <li>A spent cannabis cartridge shall be properly disposed of as hazardous waste at a household hazardous waste collection facility or other approved facility.</li>
+            <li v-for="(item, idx) in (showFullDisclaimer ? disclaimerList : disclaimerList.slice(0,2))" :key="idx">{{ item }}</li>
           </ul>
+          <span v-if="disclaimerList.length > 2 && !showFullDisclaimer" class="text-green-600 text-xs cursor-pointer" @click="showFullDisclaimer = true">See More</span>
+          <span v-if="showFullDisclaimer" class="text-green-600 text-xs cursor-pointer" @click="showFullDisclaimer = false">See Less</span>
           <div class="text-xs font-bold mb-1">WARNING:</div>
-          <p class="text-xs text-gray-700">This product can expose you to chemicals, including Cannabis Smoke, which are known to the State of California to cause cancer and birth defects or other reproductive harm. For more information go to <a href="https://www.P65Warnings.ca.gov" class="text-green-600 underline">www.P65Warnings.ca.gov</a></p>
+          <p class="text-xs text-gray-700">
+            <span v-if="!showFullWarning">{{ warningText.slice(0, 120) }}<span v-if="warningText.length > 120">...</span></span>
+            <span v-else>{{ warningText }}</span>
+            <span v-if="warningText.length > 120 && !showFullWarning" class="text-green-600 text-xs cursor-pointer" @click="showFullWarning = true">See More</span>
+            <span v-if="showFullWarning" class="text-green-600 text-xs cursor-pointer" @click="showFullWarning = false">See Less</span>
+          </p>
         </div>
         <div v-if="!showCart" class="fixed bottom-0 left-0 w-full bg-white border-t flex items-center justify-between px-4 py-3">
           <button class="bg-green-600 text-white px-8 py-3 rounded font-bold flex items-center gap-2 text-lg w-full mx-2" @click="addToCart" :disabled="loadingCart">
@@ -101,7 +107,7 @@
             <span v-if="!loadingCart">Add to cart</span>
             <span v-else>Adding...</span>
           </button>
-          <button class="bg-yellow-500 text-white px-8 py-3 rounded font-bold flex items-center gap-2 text-lg w-full mx-2">Buy now</button>
+          <button class="bg-yellow-500 text-white px-8 py-3 rounded font-bold flex items-center gap-2 text-lg w-full mx-2" @click="buyNow" :disabled="loadingCart">Buy now</button>
         </div>
       </div>
       <!-- Desktop Product Details -->
@@ -145,42 +151,42 @@
               <span v-if="!loadingCart">Add to cart</span>
               <span v-else>Adding...</span>
             </button>
-            <button class="bg-yellow-500 text-white px-8 py-3 rounded font-bold flex items-center gap-2 text-lg">Buy now</button>
+            <button class="bg-yellow-500 text-white px-8 py-3 rounded font-bold flex items-center gap-2 text-lg" @click="buyNow" :disabled="loadingCart">Buy now</button>
           </div>
           <div class="mt-6">
-            <h2 class="text-base font-bold mb-2">{{ product.title }}, <span class="font-normal text-sm"> {{ product.description }} </span></h2>
+            <h2 class="text-base font-bold mb-2">{{ product.title }}</h2>
+            <div class="font-normal text-sm">
+              <span v-if="!showFullDescription">{{ product.description.slice(0, 120) }}<span v-if="product.description.length > 120">...</span></span>
+              <span v-else>{{ product.description }}</span>
+              <span v-if="product.description.length > 120 && !showFullDescription" class="text-green-600 text-xs cursor-pointer" @click="showFullDescription = true">See More</span>
+              <span v-if="showFullDescription" class="text-green-600 text-xs cursor-pointer" @click="showFullDescription = false">See Less</span>
+            </div>
             <div class="text-xs text-gray-700 mb-2">About the Brand</div>
             <img src="/images/photo7.jpg" alt="Brand Logo" class="h-8 mb-2" />
-            <p class="text-xs text-gray-700">Fidels is known as an innovative, award-winning, California-based cannabis brand. Founded in 2017 as a pioneering vape company, Fidels evolved into so much more. Today, Fidels has become one of the world's most treasured cannabis brands with its class defining retail stores and amazing cannabis products. Always innovating, always inspiring, always influencing: that's Fidels.</p>
-            <span class="text-green-600 text-xs cursor-pointer">See More</span>
-          </div>
+            <p class="text-xs text-gray-700">
+              <span v-if="!showFullBrand">{{ brandText.slice(0, 120) }}<span v-if="brandText.length > 120">...</span></span>
+              <span v-else>{{ brandText }}</span>
+              <span v-if="brandText.length > 120 && !showFullBrand" class="text-green-600 text-xs cursor-pointer" @click="showFullBrand = true">See More</span>
+              <span v-if="showFullBrand" class="text-green-600 text-xs cursor-pointer" @click="showFullBrand = false">See Less</span>
+            </p>
+            </div>
           <div class="mt-6">
             <div class="text-xs font-bold mb-1">Disclaimer:</div>
             <ul class="text-xs text-gray-700 list-disc ml-4 mb-2">
-              <li>An empty integrated cannabis vaporizer shall be properly disposed of as a hazardous waste at a household hazardous waste collection facility or other approved facility.</li>
-              <li>A spent cannabis cartridge shall be properly disposed of as hazardous waste at a household hazardous waste collection facility or other approved facility.</li>
+              <li v-for="(item, idx) in (showFullDisclaimer ? disclaimerList : disclaimerList.slice(0,2))" :key="idx">{{ item }}</li>
             </ul>
+            <span v-if="disclaimerList.length > 2 && !showFullDisclaimer" class="text-green-600 text-xs cursor-pointer" @click="showFullDisclaimer = true">See More</span>
+            <span v-if="showFullDisclaimer" class="text-green-600 text-xs cursor-pointer" @click="showFullDisclaimer = false">See Less</span>
             <div class="text-xs font-bold mb-1">WARNING:</div>
-            <p class="text-xs text-gray-700">This product can expose you to chemicals, including Cannabis Smoke, which are known to the State of California to cause cancer and birth defects or other reproductive harm. For more information go to <a href="https://www.P65Warnings.ca.gov" class="text-green-600 underline">www.P65Warnings.ca.gov</a></p>
+            <p class="text-xs text-gray-700">
+              <span v-if="!showFullWarning">{{ warningText.slice(0, 120) }}<span v-if="warningText.length > 120">...</span></span>
+              <span v-else>{{ warningText }}</span>
+              <span v-if="warningText.length > 120 && !showFullWarning" class="text-green-600 text-xs cursor-pointer" @click="showFullWarning = true">See More</span>
+              <span v-if="showFullWarning" class="text-green-600 text-xs cursor-pointer" @click="showFullWarning = false">See Less</span>
+            </p>
           </div>
         </div>
-      </div>
-      <!-- More from Brand Carousel -->
-      <div class="max-w-6xl mx-auto mt-12 px-4">
-        <h2 class="text-lg font-bold mb-4">More from {{ product.brand }}</h2>
-        <div class="flex gap-4 overflow-x-auto pb-4">
-          <!-- Example cards, replace with real data -->
-          <div v-for="n in 6" :key="n" class="min-w-[220px] bg-white border rounded-lg shadow p-4 flex flex-col items-center">
-            <div class="w-full flex items-center justify-center" style="height:208px;">
-              <img :src="product.images[0]" alt="Product" class="w-full h-full object-contain mb-2" />
-            </div>
-            <div class="font-bold text-sm mb-1">Fidels</div>
-            <div class="text-xs text-gray-500 mb-1">Hybrid • THC Pod</div>
-            <div class="text-green-700 font-bold text-lg mb-1">$20 <span class="text-gray-400 line-through text-sm">$25</span></div>
-            <button class="bg-green-600 text-white px-3 py-1 rounded text-xs font-bold flex items-center gap-1"><i class="pi pi-plus"></i></button>
-          </div>
-        </div>
-      </div>
+      </div>  
     </template>
   </section>
 </template>
@@ -201,6 +207,7 @@ const toastMessage = ref('')
 const toastIcon = ref('pi pi-check-circle')
 const toastDuration = ref(2500)
 const showOrderContactModal = ref(false)
+const showCheckout = ref(false)
 
 const route = useRoute()
 const product = ref({
@@ -222,6 +229,17 @@ const imageIndex = ref(0)
 const quantity = ref(1)
 const loadingCart = ref(false)
 const loading = ref(true)
+const showFullDescription = ref(false)
+const showFullBrand = ref(false)
+const showFullDisclaimer = ref(false)
+const showFullWarning = ref(false)
+
+const brandText = `Fidels is known as an innovative, award-winning, California-based cannabis brand. Founded in 2017 as a pioneering vape company, Fidels evolved into so much more. Today, Fidels has become one of the world's most treasured cannabis brands with its class defining retail stores and amazing cannabis products. Always innovating, always inspiring, always influencing: that's Fidels.`
+const disclaimerList = [
+  'An empty integrated cannabis vaporizer shall be properly disposed of as a hazardous waste at a household hazardous waste collection facility or other approved facility.',
+  'A spent cannabis cartridge shall be properly disposed of as hazardous waste at a household hazardous waste collection facility or other approved facility.'
+]
+const warningText = `This product can expose you to chemicals, including Cannabis Smoke, which are known to the State of California to cause cancer and birth defects or other reproductive harm. For more information go to www.P65Warnings.ca.gov`
 
 function increaseQty() {
   quantity.value++
@@ -252,6 +270,28 @@ async function addToCart() {
     toastMessage.value = 'Added to cart!'
     toastIcon.value = 'pi pi-check-circle'
     showToast.value = true
+  } catch (err) {
+    toastMessage.value = 'Failed to add to cart.'
+    toastIcon.value = 'pi pi-times-circle'
+    showToast.value = true
+    console.error('Failed to add to cart:', err)
+  } finally {
+    loadingCart.value = false
+  }
+}
+
+async function buyNow() {
+  loadingCart.value = true
+  try {
+    await axios.post('https://fidel-of6u.onrender.com/api/carts', {
+      sessionId: getSessionId(),
+      products: [{
+        product: route.params.id,
+        quantity: quantity.value
+      }]
+    })
+    showCart.value = true
+    showCheckout.value = true
   } catch (err) {
     toastMessage.value = 'Failed to add to cart.'
     toastIcon.value = 'pi pi-times-circle'

@@ -28,7 +28,7 @@
           <div class="border-b border-dashed border-gray-300 w-full my-2"></div>
           <div class="text-green-700 font-bold text-xl mb-1">{{ product.price }}</div>
           <div class="text-xs text-gray-500 mb-2">Tax included</div>
-          <button class="w-full bg-green-600 text-white font-bold py-2 rounded mt-auto hover:bg-green-700 transition" @click="goToProduct(product.id)">BUY NOW</button>
+          <button class="w-full bg-green-600 text-white font-bold py-2 rounded mt-auto hover:bg-green-700 transition" @click="goToProduct(product.id)">View product</button>
         </div>
       </div>
       <button class="absolute right-0 top-1/2 -translate-y-1/2 bg-white border border-gray-300 shadow p-2 rounded-full z-10" @click="scrollRight">

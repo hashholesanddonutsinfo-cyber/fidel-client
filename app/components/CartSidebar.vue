@@ -32,11 +32,11 @@
         </div>
       </div>
       <div class="p-4 border-t">
-        <button v-if="cartItems.length > 0" class="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700" @click="showCheckout = true">
+        <button v-if="cartItems.length > 0" class="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700" @click="openCheckout">
           Checkout
         </button>
       </div>
-      <CheckoutModal :visible="showCheckout" :cartItems="cartItems" @close="showCheckout = false" />
+      <CheckoutModal :visible="showCheckout" :cartItems="cartItems" @close="() => { showCheckout = false; emit('close-checkout'); }" />
     </div>
   </transition>
 </template>
@@ -46,12 +46,12 @@ import { ref, watch, onMounted } from 'vue';
 import CheckoutModal from './CheckoutModal.vue';
 import axios from 'axios';
 
-const props = defineProps<{ visible: boolean }>();
-const emit = defineEmits(['close']);
+const props = defineProps<{ visible: boolean, showCheckout?: boolean }>();
+const emit = defineEmits(['close', 'close-checkout']);
 
 const cartItems = ref<any[]>([]);
 const loading = ref(false);
-const showCheckout = ref(false);
+const showCheckout = ref(props.showCheckout ?? false);
 
 function getSessionId() {
   let sessionId = localStorage.getItem('sessionId');
@@ -87,6 +87,11 @@ const removeFromCart = async (cartItemId: string) => {
   } catch (err) {
     // handle error
   }
+};
+
+const openCheckout = async () => {
+  await fetchCart();
+  showCheckout.value = true;
 };
 
 const close = () => emit('close');

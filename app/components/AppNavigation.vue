@@ -28,7 +28,13 @@
           >
             Home
           </NuxtLink>
-
+          <NuxtLink
+            to="/ProductPage"
+            class="text-gray-400 hover:text-gray-600 transition-all duration-200 font-sans text-xs sm:text-sm font-medium py-2 relative group whitespace-nowrap flex-shrink-0"
+            active-class="text-blue-500 font-semibold"
+          >
+            All Products
+          </NuxtLink>
           <!-- Dynamic Categories -->
           <NuxtLink 
             v-for="category in categories" 

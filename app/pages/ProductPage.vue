@@ -81,7 +81,7 @@
             <div class="border-b border-dashed border-gray-300 w-full my-2"></div>
             <div class="text-green-700 font-bold text-xl mb-1">${{ product.price }}</div>
             <div class="text-xs text-gray-500 mb-2">Tax included</div>
-            <button class="w-full bg-green-600 text-white font-bold py-2 rounded mt-auto hover:bg-green-700 transition" @click.stop>BUY NOW</button>
+            <button class="w-full bg-green-600 text-white font-bold py-2 rounded mt-auto hover:bg-green-700 transition" @click.stop>Add to cart</button>
           </NuxtLink>
         </div>
       </div>
