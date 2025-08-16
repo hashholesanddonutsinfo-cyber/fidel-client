@@ -3,10 +3,10 @@
     <div class="bg-white rounded-lg shadow-lg w-full max-w-md mx-4 p-8 flex flex-col items-center justify-center gap-6">
       <h2 class="text-2xl font-bold text-center mb-4">Contact the Admin to Complete Your Order</h2>
       <div class="flex flex-col items-center gap-4">
-        <a href="https://voice.google.com/u/0/calls?a=nc,%2B17182185533" target="_blank" class="flex items-center gap-2 px-6 py-3 rounded-lg bg-green-600 text-white font-bold text-lg hover:bg-green-700 transition">
-          <i class="pi pi-phone text-2xl"></i>
-          <span>Google Voice</span>
-        </a>
+       <a href="sms:+17182185533" class="flex items-center gap-2 px-6 py-3 rounded-lg bg-green-600 text-white font-bold text-lg hover:bg-green-700 transition">
+  <i class="pi pi-phone text-2xl"></i>
+  <span>Text Message</span>
+      </a>
         <a href="mailto:INFO@FIDELSCLOTHINGS.COM" class="flex items-center gap-2 px-6 py-3 rounded-lg bg-blue-600 text-white font-bold text-lg hover:bg-blue-700 transition">
           <i class="pi pi-envelope text-2xl"></i>
           <span>Email</span>
