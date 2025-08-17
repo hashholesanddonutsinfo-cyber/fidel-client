@@ -18,7 +18,7 @@
           </div>
           <div v-else>
             <div v-for="item in cartItems" :key="item._id" class="flex items-center mb-4">
-              <img :src="(item.product.images && item.product.images.length) ? item.product.images[0] : (item.product.image || '/images/default.jpg')" alt="Product" class="w-16 h-16 object-cover rounded mr-3" />
+              <img :src="(item.product.images && item.product.images.length) ? item.product.images[0] : (item.product.image || 'https://res.cloudinary.com/day7o4yjq/image/upload/v1755434971/blogs/hd2onxowdfkj7ui1whcq.jpg')" alt="Product" class="w-16 h-16 object-cover rounded mr-3" />
               <div class="flex-1">
                 <div class="font-semibold">{{ item.product.name }}</div>
                 <div class="text-sm text-gray-500">Qty: {{ item.quantity }}</div>

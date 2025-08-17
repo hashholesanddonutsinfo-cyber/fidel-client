@@ -6,14 +6,14 @@
     <meta name="keywords" content="hashholes, cannabis, weed, fidels, fidelsclothings, fidelclothing, fidel, clothing, fidel events, events, products, hash and holes, hash, holes,, vapes, edibles, prerolls, concentrates, CA delivery, buy weed, fidels, fidelsclothings, fidelclothing, fidel, clothing, fidel events, events, products, hash and holes, hash, holes, online, premium cannabis, {{ product.title }}" />
     <meta property="og:title" :content="product.title + ' | HashHoles'" />
     <meta property="og:description" :content="product.description || 'Premium cannabis product from HashHoles. Fast CA delivery.'" />
-    <meta property="og:image" :content="product.images[0] || 'https://cdn.shopify.com/s/files/1/0276/6569/4860/files/FIDELS_GREEN_LOGO.png?height=628&pad_color=ffffff&v=1733808591&width=1200'" />
+    <meta property="og:image" :content="product.images[0] || 'https://res.cloudinary.com/day7o4yjq/image/upload/v1755434971/blogs/hd2onxowdfkj7ui1whcq.jpg'" />
     <meta property="og:type" content="product" />
-    <meta property="og:url" :content="'https://fidelsclothings.com/productDetail/' + $route.params.id" />
+    <meta property="og:url" :content="'https://fidelshashhole.ai/productDetail/' + $route.params.id" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" :content="product.title + ' | HashHoles'" />
     <meta name="twitter:description" :content="product.description || 'Premium cannabis product from HashHoles. Fast CA delivery.'" />
-    <meta name="twitter:image" :content="product.images[0] || 'https://cdn.shopify.com/s/files/1/0276/6569/4860/files/FIDELS_GREEN_LOGO.png?height=628&pad_color=ffffff&v=1733808591&width=1200'" />
-    <link rel="canonical" :href="'https://fidelsclothings.com/productDetail/' + $route.params.id" />
+    <meta name="twitter:image" :content="product.images[0] || 'https://res.cloudinary.com/day7o4yjq/image/upload/v1755434971/blogs/hd2onxowdfkj7ui1whcq.jpg'" />
+    <link rel="canonical" :href="'https://fidelshashhole.ai/productDetail/' + $route.params.id" />
     <meta name="robots" content="index, follow" />
     <meta name="author" content="HashHoles" />
   </Head>
@@ -325,7 +325,7 @@ onMounted(async () => {
       sale: !!p.sale || !!p.discount,
       price: p.price ? `$${p.price}` : '',
       oldPrice: p.oldPrice ? `$${p.oldPrice}` : '',
-      images: p.images && p.images.length ? p.images : [p.image || '/images/default.jpg'],
+      images: p.images && p.images.length ? p.images : [p.image || 'https://res.cloudinary.com/day7o4yjq/image/upload/v1755434971/blogs/hd2onxowdfkj7ui1whcq.jpg'],
       thc: p.thc || '',
       cbd: p.cbd || '',
       thcPerDollar: p.thcPerDollar || '',
@@ -346,13 +346,13 @@ useHead({
     { name: 'keywords', content: 'hashholes, cannabis, weed, fidels, fidelsclothings, fidelclothing, fidel, clothing, fidel events, events, products, hash and holes, hash, holes,, vapes, edibles, prerolls, concentrates, CA delivery, buy weed, fidels, fidelsclothings, fidelclothing, fidel, clothing, fidel events, events, products, hash and holes, hash, holes, online, premium cannabis, ' + product.value.title },
     { property: 'og:title', content: product.value.title + ' | HashHoles' },
     { property: 'og:description', content: product.value.description || 'Premium cannabis product from HashHoles. Fast CA delivery.' },
-    { property: 'og:image', content: product.value.images[0] || 'https://cdn.shopify.com/s/files/1/0276/6569/4860/files/FIDELS_GREEN_LOGO.png?height=628&pad_color=ffffff&v=1733808591&width=1200' },
+    { property: 'og:image', content: product.value.images[0] || 'https://res.cloudinary.com/day7o4yjq/image/upload/v1755434971/blogs/hd2onxowdfkj7ui1whcq.jpg' },
     { property: 'og:type', content: 'product' },
     { property: 'og:url', content: 'https://hashholes.com/productDetail/' + route.params.id },
     { name: 'twitter:card', content: 'summary_large_image' },
     { name: 'twitter:title', content: product.value.title + ' | HashHoles' },
     { name: 'twitter:description', content: product.value.description || 'Premium cannabis product from HashHoles. Fast CA delivery.' },
-    { name: 'twitter:image', content: product.value.images[0] || 'https://cdn.shopify.com/s/files/1/0276/6569/4860/files/FIDELS_GREEN_LOGO.png?height=628&pad_color=ffffff&v=1733808591&width=1200' },
+    { name: 'twitter:image', content: product.value.images[0] || 'https://res.cloudinary.com/day7o4yjq/image/upload/v1755434971/blogs/hd2onxowdfkj7ui1whcq.jpg' },
     { name: 'robots', content: 'index, follow' },
     { name: 'author', content: 'Fidels' }
   ],

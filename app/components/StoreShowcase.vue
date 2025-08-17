@@ -3,7 +3,7 @@
     <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-center gap-8 px-4">
       <!-- Left: Inline Brand Badges/Stats -->
       <div class="w-full md:w-1/2 flex items-center justify-center min-h-[160px]">
-        <img src="https://cdn.shopify.com/s/files/1/0276/6569/4860/files/FIDELS_GREEN_LOGO.png?height=628&pad_color=ffffff&v=1733808591&width=1200" alt="Store Badges Cluster" class="max-w-full h-auto" style="max-height:160px;" />
+        <img src="https://res.cloudinary.com/day7o4yjq/image/upload/v1755434971/blogs/hd2onxowdfkj7ui1whcq.jpg" alt="Store Badges Cluster" class="max-w-full h-auto" style="max-height:160px;" />
       </div>
       <!-- Right: Description -->
       <div class="md:w-1/2 text-white">

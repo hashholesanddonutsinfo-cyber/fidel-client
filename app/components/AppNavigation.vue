@@ -48,6 +48,13 @@
               class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-2 h-2 bg-blue-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200">
             </div>
           </NuxtLink>
+          <NuxtLink
+            to="/blogs"
+            class="text-gray-400 hover:text-gray-600 transition-all duration-200 font-sans text-xs sm:text-sm font-medium py-2 relative group whitespace-nowrap flex-shrink-0"
+            active-class="text-blue-500 font-semibold"
+          >
+            Blogs
+          </NuxtLink>
         </div>
 
         <!-- Cart Button (hidden on / route) -->
@@ -98,7 +105,7 @@ const categories = ref([
   { id: 2, name: 'HashHoles' },
   { id: 3, name: '70/30 prerolls' },
   { id: 4, name: 'Rosin 2G jars' },
-  { id: 5, name: 'Flowers' },
+  { id: 5, name: 'flowers by fidels' },
   { id: 6, name: 'Events' },
   { id: 7, name: 'Sponsorships' },
 ])

@@ -194,7 +194,7 @@ onMounted(async () => {
     const res = await axios.get('https://fidel-of6u.onrender.com/api/products')
     products.value = res.data.map((p: any) => ({
       id: p._id || p.id,
-      image: p.images && p.images.length ? p.images[0] : (p.image || '/images/default.jpg'),
+      image: p.images && p.images.length ? p.images[0] : (p.image || 'https://res.cloudinary.com/day7o4yjq/image/upload/v1755434971/blogs/hd2onxowdfkj7ui1whcq.jpg'),
       images: p.images || [],
       category: p.category || '',
       title: p.name || '',

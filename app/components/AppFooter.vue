@@ -5,7 +5,7 @@
       <div class="flex flex-col gap-2 text-xs text-gray-700">
         <a href="#" class="hover:underline">Contact Us</a>
         <a href="#" class="hover:underline">FAQs</a>
-        <a href="#" class="hover:underline">Verify HahAndHoles</a>
+        <a href="#" class="hover:underline">Verify Fidelshashhole</a>
         <a href="#" class="hover:underline">Información de Biotrack</a>
         <a href="#" class="hover:underline">Careers</a>
         <a href="#" class="hover:underline">Privacy Policy</a>
@@ -30,15 +30,15 @@
         <a href="#" class="hover:underline">Products</a>
         <a href="#" class="hover:underline">Shop</a>
         <a href="#" class="hover:underline">Blog</a>
-        <a href="#" class="hover:underline">Find HahAndHoles Products</a>
-        <a href="#" class="hover:underline">HahAndHoles Insider</a>
-        <a href="#" class="hover:underline">HahAndHoles Lookbook</a>
-        <a href="#" class="hover:underline">HahAndHoles Smoke Shop</a>
-        <a href="#" class="hover:underline">HahAndHoles Delivery</a>
+        <a href="#" class="hover:underline">Find Fidelshashhole Products</a>
+        <a href="#" class="hover:underline">Fidelshashhole Insider</a>
+        <a href="#" class="hover:underline">Fidelshashhole Lookbook</a>
+        <a href="#" class="hover:underline">Fidelshashhole Smoke Shop</a>
+        <a href="#" class="hover:underline">Fidelshashhole Delivery</a>
       </div>
     </div>
     <div class="max-w-7xl mx-auto px-4 mt-8 text-xs text-gray-500">
-      <div class="mb-2">Copyright © 2025 HahAndHoles IP LLC</div>
+      <div class="mb-2">Copyright © 2025 Fidelshashhole IP LLC</div>
       <div class="mb-2">For use by individuals registered qualifying patients or individuals 21 years of age or older only. Keep out of reach of children. It is illegal to drive a motor vehicle while under the influence of marijuana. National Poison Control Center 1-800-222-1222.</div>
       <div class="border border-black p-2 mb-2 font-bold text-black bg-white">WARNING: USE BY PREGNANT OR BREASTFEEDING WOMEN, OR BY WOMEN PLANNING TO BECOME PREGNANT, MAY RESULT IN FETAL INJURY, PRETERM BIRTH, LOW BIRTH WEIGHT, OR DEVELOPMENTAL PROBLEMS FOR THE CHILD.</div>
       <div class="mb-2">An empty integrated cannabis vaporizer shall be properly disposed of as a hazardous waste at a household hazardous waste collection facility or other approved facility.</div>

@@ -5,14 +5,14 @@
     <meta name="keywords" content="cannabis, hashholes, premium weed, fidels, fidelsclothings, fidelclothing, fidel, clothing, fidel events, events, products, hash and holes, hash, holes,, vapes, edibles, prerolls, concentrates, topicals, tinctures, capsules, accessories, CA delivery, buy weed, fidels, fidelsclothings, fidelclothing, fidel, clothing, fidel events, events, products, hash and holes, hash, holes, online, best cannabis products" />
     <meta property="og:title" content="Shop Premium Cannabis Products | HashHoles" />
     <meta property="og:description" content="Browse and buy premium cannabis products including flowers, vapes, edibles, prerolls, concentrates, and more. Fast CA delivery. HashHoles is the leading lifestyle brand in cannabis." />
-    <meta property="og:image" content="https://cdn.shopify.com/s/files/1/0276/6569/4860/files/FIDELS_GREEN_LOGO.png?height=628&pad_color=ffffff&v=1733808591&width=1200" />
+    <meta property="og:image" content="https://res.cloudinary.com/day7o4yjq/image/upload/v1755434971/blogs/hd2onxowdfkj7ui1whcq.jpg" />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://fidelsclothings.com/products" />
+    <meta property="og:url" content="https://fidelshashhole.ai/products" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Shop Premium Cannabis Products | HashHoles" />
     <meta name="twitter:description" content="Browse and buy premium cannabis products including flowers, vapes, edibles, prerolls, concentrates, and more. Fast CA delivery. HashHoles is the leading lifestyle brand in cannabis." />
-    <meta name="twitter:image" content="https://cdn.shopify.com/s/files/1/0276/6569/4860/files/FIDELS_GREEN_LOGO.png?height=628&pad_color=ffffff&v=1733808591&width=1200" />
-    <link rel="canonical" href="https://fidelsclothings.com/products" />
+    <meta name="twitter:image" content="https://res.cloudinary.com/day7o4yjq/image/upload/v1755434971/blogs/hd2onxowdfkj7ui1whcq.jpg" />
+    <link rel="canonical" href="https://fidelshashhole.ai/products" />
     <meta name="robots" content="index, follow" />
     <meta name="author" content="HashHoles" />
   </Head>
@@ -64,7 +64,7 @@
             <div class="absolute top-4 right-4">
               <span v-if="product.badge" class="bg-black text-white text-xs font-bold px-3 py-1 rounded-full">Available</span>
             </div>
-            <img :src="(product.images && product.images.length) ? product.images[0] : '/images/default.jpg'"
+            <img :src="(product.images && product.images.length) ? product.images[0] : 'https://res.cloudinary.com/day7o4yjq/image/upload/v1755434971/blogs/hd2onxowdfkj7ui1whcq.jpg'"
               :alt="product.name"
               class="w-40 h-40 object-cover mb-2 rounded-lg border border-gray-100" />
             <div class="text-gray-500 text-xs mb-1 text-center uppercase tracking-wide mt-2">
@@ -183,13 +183,13 @@ useHead({
     { name: 'keywords', content: 'cannabis, hashholes, premium weed, fidels, fidelsclothings, fidelclothing, fidel, clothing, fidel events, events, products, hash and holes, hash, holes,, vapes, edibles, prerolls, concentrates, topicals, tinctures, capsules, accessories, CA delivery, buy weed, fidels, fidelsclothings, fidelclothing, fidel, clothing, fidel events, events, products, hash and holes, hash, holes, online, best cannabis products' },
     { property: 'og:title', content: 'Shop Premium Cannabis Products | HashHoles' },
     { property: 'og:description', content: 'Browse and buy premium cannabis products including flowers, vapes, edibles, prerolls, concentrates, and more. Fast CA delivery. HashHoles is the leading lifestyle brand in cannabis.' },
-    { property: 'og:image', content: 'https://cdn.shopify.com/s/files/1/0276/6569/4860/files/FIDELS_GREEN_LOGO.png?height=628&pad_color=ffffff&v=1733808591&width=1200' },
+    { property: 'og:image', content: 'https://res.cloudinary.com/day7o4yjq/image/upload/v1755434971/blogs/hd2onxowdfkj7ui1whcq.jpg' },
     { property: 'og:type', content: 'website' },
     { property: 'og:url', content: 'https://hashholes.com/products' },
     { name: 'twitter:card', content: 'summary_large_image' },
     { name: 'twitter:title', content: 'Shop Premium Cannabis Products | HashHoles' },
     { name: 'twitter:description', content: 'Browse and buy premium cannabis products including flowers, vapes, edibles, prerolls, concentrates, and more. Fast CA delivery. HashHoles is the leading lifestyle brand in cannabis.' },
-    { name: 'twitter:image', content: 'https://cdn.shopify.com/s/files/1/0276/6569/4860/files/FIDELS_GREEN_LOGO.png?height=628&pad_color=ffffff&v=1733808591&width=1200' },
+    { name: 'twitter:image', content: 'https://res.cloudinary.com/day7o4yjq/image/upload/v1755434971/blogs/hd2onxowdfkj7ui1whcq.jpg' },
     { name: 'robots', content: 'index, follow' },
     { name: 'author', content: 'Fidels' }
   ],
@@ -204,8 +204,8 @@ if (process.client) {
     "@context": "https://schema.org",
     "@type": "Store",
     "name": "HashHoles Cannabis Store",
-    "url": "https://fidelsclothings.com/products",
-    "image": "https://cdn.shopify.com/s/files/1/0276/6569/4860/files/FIDELS_GREEN_LOGO.png?height=628&pad_color=ffffff&v=1733808591&width=1200",
+    "url": "https://fidelshashhole.ai/products",
+    "image": "https://res.cloudinary.com/day7o4yjq/image/upload/v1755434971/blogs/hd2onxowdfkj7ui1whcq.jpg",
     "description": "Premium cannabis products delivered fast in California. Shop flowers, vapes, edibles, prerolls, concentrates, and more.",
     "address": {
       "@type": "PostalAddress",

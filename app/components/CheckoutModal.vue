@@ -48,8 +48,8 @@
             <input type="text" v-model="form.state" required class="w-full border border-gray-300 rounded px-4 py-2 bg-white" />
           </div>
           <div>
-            <label class="block text-gray-700 mb-1">Postcode / ZIP <span class="text-red-500">*</span></label>
-            <input type="text" v-model="form.zip" required class="w-full border border-gray-300 rounded px-4 py-2 bg-white" />
+            <label class="block text-gray-700 mb-1">Postcode <span class="text-red-500">*</span></label>
+            <input type="text" v-model="form.postcode" required class="w-full border border-gray-300 rounded px-4 py-2 bg-white" />
           </div>
           <div>
             <label class="block text-gray-700 mb-1">Phone <span class="text-red-500">*</span></label>
@@ -119,7 +119,7 @@
         <h2 class="text-lg font-bold mb-6 text-gray-900">Order Summary</h2>
         <div v-for="item in cartItems" :key="item._id" class="flex items-center justify-between mb-6">
           <div class="flex items-center gap-4">
-            <img :src="(item.product.images && item.product.images.length) ? item.product.images[0] : (item.product.image || '/images/default.jpg')" alt="Product" class="w-16 h-16 object-cover rounded" />
+            <img :src="(item.product.images && item.product.images.length) ? item.product.images[0] : (item.product.image || 'https://res.cloudinary.com/day7o4yjq/image/upload/v1755434971/blogs/hd2onxowdfkj7ui1whcq.jpg')" alt="Product" class="w-16 h-16 object-cover rounded" />
             <div>
               <div class="font-semibold text-gray-900">{{ item.product.name }}</div>
               <div class="text-sm text-gray-500">{{ item.product.code || '' }}</div>
@@ -154,7 +154,7 @@
         >
           {{ submitting ? 'Submitting...' : 'Confirm Order' }}
         </button>
-        <div v-if="successMessage" class="mt-4 text-green-700 font-semibold text-center">{{ successMessage }}</div>
+  <!-- Removed unused successMessage -->
       </div>
     </div>
     </div>
@@ -163,6 +163,7 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted } from 'vue';
+import axios from 'axios';
 const props = defineProps<{ visible: boolean, cartItems: any[] }>();
 const emit = defineEmits(['close', 'increase', 'decrease']);
 const close = () => emit('close');
@@ -176,7 +177,7 @@ const form = ref({
   apartment: '',
   city: '',
   state: '',
-  zip: '',
+  postcode: '',
   phone: '',
   email: '',
   orderNotes: '',
@@ -187,48 +188,51 @@ const form = ref({
 });
 const subtotal = computed(() => props.cartItems.reduce((sum, item) => sum + (item.product.price * item.quantity), 0));
 
-import axios from 'axios';
 const submitting = ref(false);
-const successMessage = ref('');
-const showTooltip = ref(false);
 // Removed manual event listeners for confirm order button. Vue's native click handling will ensure submitOrder is called when the button is active.
 
-const requiredFields = [
-  'firstName', 'lastName', 'country', 'streetAddress', 'city', 'state', 'zip', 'phone', 'email'
+const requiredFields: (keyof typeof form.value)[] = [
+  'firstName', 'lastName', 'country', 'streetAddress', 'city', 'state', 'postcode', 'phone', 'email'
 ];
-const isFormValid = computed(() => {
+function validateForm() {
   return requiredFields.every(field => form.value[field] && form.value[field].toString().trim() !== '');
-});
+}
 
 async function submitOrder() {
   if (submitting.value) return;
+  if (!validateForm()) {
+    alert('Please fill in all required fields.');
+    return;
+  }
   submitting.value = true;
   try {
-    // Map FE fields to BE model
-    const billingAddress = {
-      fullName: `${form.value.firstName} ${form.value.lastName}`,
-      addressLine1: form.value.streetAddress,
-      addressLine2: form.value.apartment,
+    // Fetch cartId using sessionId
+    let sessionId = localStorage.getItem('sessionId');
+    if (!sessionId) {
+      sessionId = Math.random().toString(36).substring(2) + Date.now();
+      localStorage.setItem('sessionId', sessionId);
+    }
+    const cartRes = await axios.get(`https://fidel-of6u.onrender.com/api/carts?sessionId=${sessionId}`);
+    const cart = Array.isArray(cartRes.data) ? cartRes.data.find((c) => c.sessionId === sessionId) : cartRes.data;
+    if (!cart || !cart._id) throw new Error('Cart not found');
+    // Build payload with flat fields and cartId
+    const payload = {
+      cartId: cart._id,
+      firstName: form.value.firstName,
+      lastName: form.value.lastName,
+      companyName: form.value.companyName,
+      country: form.value.country,
       city: form.value.city,
       state: form.value.state,
-      postalCode: form.value.zip,
-      country: form.value.country
-    };
-    const payload = {
-      user: form.value.email, // or session/user id if available
-      products: props.cartItems.map(item => ({
-        product: item.product._id,
-        quantity: item.quantity
-      })),
-      billingAddress,
-      status: 'pending',
-      total: subtotal.value,
-      paymentMethod: form.value.paymentMethod,
-      scheduleDelivery: form.value.scheduleDelivery ? {
+      postcode: form.value.postcode,
+      phone: form.value.phone,
+      email: form.value.email,
+      orderNote: form.value.orderNotes,
+      scheduledDelivery: form.value.scheduleDelivery ? {
         date: form.value.date,
         note: form.value.note
       } : null,
-      orderNotes: form.value.orderNotes
+      paymentMethod: form.value.paymentMethod
     };
     await axios.post('https://fidel-of6u.onrender.com/api/orders', payload);
     // Use local toast logic: dispatch a custom event for productDetail/[id].vue to handle
@@ -243,8 +247,8 @@ async function submitOrder() {
       window.dispatchEvent(new CustomEvent('clear-cart'));
     }
     emit('close');
-  } catch (err) {
-    alert('Order failed. Please try again.');
+  } catch (err: any) {
+    alert('Order failed. ' + (err?.response?.data?.error || err?.message || 'Please try again.'));
   } finally {
     submitting.value = false;
   }

@@ -7,7 +7,7 @@
   <i class="pi pi-phone text-2xl"></i>
   <span>Text Message</span>
       </a>
-        <a href="mailto:INFO@FIDELSCLOTHINGS.COM" class="flex items-center gap-2 px-6 py-3 rounded-lg bg-blue-600 text-white font-bold text-lg hover:bg-blue-700 transition">
+        <a href="mailto:INFO@fidelshashhole.ai" class="flex items-center gap-2 px-6 py-3 rounded-lg bg-blue-600 text-white font-bold text-lg hover:bg-blue-700 transition">
           <i class="pi pi-envelope text-2xl"></i>
           <span>Email</span>
         </a>
