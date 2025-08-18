@@ -7,6 +7,24 @@
   <FloatIn><StoreShowcase /></FloatIn>
   <FloatIn><FeaturedBanner /></FloatIn>
   <FloatIn><AppFooter /></FloatIn>
+
+  <div v-if="showModal" class="fixed bottom-4 left-4 z-50">
+    <div class="bg-black text-white p-4 rounded-lg shadow-lg relative max-w-xs">
+      <button @click="closeModal" class="absolute top-2 right-2 text-white hover:text-gray-400">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+        </svg>
+      </button>
+
+      <div class="mt-2 text-center">
+        <p class="text-sm md:text-base font-semibold mb-2">Exclusive Offer!</p>
+        <p class="text-xs md:text-sm">Use this coupon code for 25% off your next order.</p>
+        <div class="bg-white text-black font-bold px-3 py-1 mt-2 rounded">
+          <code class="text-sm">FIDELS25</code>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -15,6 +33,12 @@ import { useHead } from '@vueuse/head'
 import FeaturedBanner from '~/components/FeaturedBanner.vue';
 import FloatIn from '~/components/FloatIn.vue';
 import MainVideo from '~/components/MainVideo.vue';
+
+const showModal = ref(true);
+
+function closeModal() {
+  showModal.value = false;
+}
 
 // SEO meta tags
 useHead({
@@ -38,44 +62,4 @@ useHead({
     { rel: 'canonical', href: 'https://fidelshashhole.ai/' }
   ]
 })
-
-// Featured categories for the home page
-const featuredCategories = ref([
-  {
-    id: 1,
-    name: 'Flower',
-    description: 'Premium quality flowers for the ultimate experience',
-    path: '/category/flower'
-  },
-  {
-    id: 2,
-    name: 'Vapes',
-    description: 'Convenient and discreet vaping solutions',
-    path: '/category/vapes'
-  },
-  {
-    id: 3,
-    name: 'Edibles',
-    description: 'Delicious treats with perfect dosing',
-    path: '/category/edibles'
-  },
-  {
-    id: 4,
-    name: 'Concentrates',
-    description: 'High-potency extracts for experienced users',
-    path: '/category/concentrates'
-  },
-  {
-    id: 5,
-    name: 'Accessories',
-    description: 'Everything you need for the perfect setup',
-    path: '/category/accessories'
-  },
-  {
-    id: 6,
-    name: 'Beverages',
-    description: 'Refreshing drinks with a special twist',
-    path: '/category/beverages'
-  }
-])
 </script>

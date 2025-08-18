@@ -23,14 +23,14 @@
           <!-- Home Link -->
           <NuxtLink
             to="/"
-            class="text-gray-400 hover:text-gray-600 transition-all duration-200 font-sans text-xs sm:text-sm font-medium py-2 relative group whitespace-nowrap flex-shrink-0"
+            class="text-gray-900 hover:text-gray-600 transition-all duration-200 font-sans text-sm sm:text-md font-medium py-2 relative group whitespace-nowrap flex-shrink-0"
             active-class="text-blue-500 font-semibold"
           >
             Home
           </NuxtLink>
           <NuxtLink
             to="/ProductPage"
-            class="text-gray-400 hover:text-gray-600 transition-all duration-200 font-sans text-xs sm:text-sm font-medium py-2 relative group whitespace-nowrap flex-shrink-0"
+            class="text-gray-900 hover:text-gray-600 transition-all duration-200 font-sans text-sm sm:text-md font-medium py-2 relative group whitespace-nowrap flex-shrink-0"
             active-class="text-blue-500 font-semibold"
           >
             All Products
@@ -40,7 +40,7 @@
             v-for="category in categories" 
             :key="category.id"
             :to="getCategoryLink(category)"
-            class="text-gray-400 hover:text-gray-600 transition-all duration-200 font-sans text-xs sm:text-sm font-medium py-2 relative group whitespace-nowrap flex-shrink-0"
+            class="text-gray-900 hover:text-gray-600 transition-all duration-200 font-sans text-sm sm:text-md font-medium py-2 relative group whitespace-nowrap flex-shrink-0"
             active-class="text-blue-500 font-semibold"
           >
             {{ category.name }}
@@ -50,7 +50,7 @@
           </NuxtLink>
           <NuxtLink
             to="/blogs"
-            class="text-gray-400 hover:text-gray-600 transition-all duration-200 font-sans text-xs sm:text-sm font-medium py-2 relative group whitespace-nowrap flex-shrink-0"
+            class="text-gray-900 hover:text-gray-600 transition-all duration-200 font-sans text-sm sm:text-md font-medium py-2 relative group whitespace-nowrap flex-shrink-0"
             active-class="text-blue-500 font-semibold"
           >
             Blogs
@@ -105,9 +105,10 @@ const categories = ref([
   { id: 2, name: 'HashHoles' },
   { id: 3, name: '70/30 prerolls' },
   { id: 4, name: 'Rosin 2G jars' },
-  { id: 5, name: 'flowers by fidels' },
-  { id: 6, name: 'Events' },
-  { id: 7, name: 'Sponsorships' },
+  { id: 5, name: 'Hash Rosin pens/Vapes' },
+  { id: 6, name: 'flowers by fidels' },
+  { id: 7, name: 'Events' },
+  { id: 8, name: 'Sponsorships' },
 ])
 </script>
 

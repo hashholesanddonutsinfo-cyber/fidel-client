@@ -21,9 +21,7 @@
     <div class="container mx-auto px-2 py-6 flex-1">
       <h1 class="text-2xl font-bold mb-4">Products</h1>
 
-      <!-- Search & Filters -->
       <div class="flex flex-col md:flex-row gap-4 mb-6 justify-center items-center">
-        <!-- Search Bar -->
         <input
           type="text"
           v-model="searchQuery"
@@ -31,17 +29,16 @@
           class="border rounded-lg px-4 py-2 w-full md:w-1/3 focus:outline-none focus:ring-2 focus:ring-green-500"
         />
 
-        <!-- Sort Dropdown -->
         <select
           v-model="sortOption"
           class="border rounded-lg px-4 py-2 focus:outline-none w-full md:w-1/3 focus:ring-2 focus:ring-green-500"
         >
           <option value="">Sort by</option>
+          <option value="popularity">Popularity</option>
           <option value="newest">Newest</option>
           <option value="lowToHigh">Price: Low to High</option>
           <option value="highToLow">Price: High to Low</option>
         </select>
-
       </div>
 
       <Loader v-if="loading" />
@@ -71,7 +68,6 @@
               {{ typeof product.category === 'object' && product.category !== null ? product.category.name : product.category }}
             </div>
             <div class="font-bold text-lg mb-1 text-center truncate w-full">{{ product.name }}</div>
-            <!-- Review Stars -->
             <div class="flex items-center mb-2">
               <span v-for="star in 5" :key="star" class="text-yellow-400 text-lg">
                 <i :class="star <= (product.rating || 5) ? 'pi pi-star-fill' : 'pi pi-star'" />
@@ -106,6 +102,8 @@ type Product = {
   badge?: string
   images?: string[]
   category?: string | { name: string }
+  rating?: number // Add rating field
+  numReviews?: number // Add number of reviews field
 }
 
 const products = ref<Product[]>([])
@@ -127,6 +125,7 @@ async function fetchProducts(category = '') {
   try {
     const res = await fetch(url)
     const data = await res.json()
+    // Assume the backend provides ratings and number of reviews for now
     products.value = Array.isArray(data) ? data : (data.products || [])
   } catch (e) {
     products.value = []
@@ -154,14 +153,31 @@ const filteredProducts = computed(() => {
   }
 
   // Sorting
-  if (sortOption.value === 'newest') {
-    result.sort((a, b) => new Date(b.createdAt || '').getTime() - new Date(a.createdAt || '').getTime())
-  }
-  if (sortOption.value === 'lowToHigh') {
-    result.sort((a, b) => a.price - b.price)
-  }
-  if (sortOption.value === 'highToLow') {
-    result.sort((a, b) => b.price - a.price)
+  switch (sortOption.value) {
+    case 'newest':
+      result.sort((a, b) => new Date(b.createdAt || '').getTime() - new Date(a.createdAt || '').getTime());
+      break;
+    case 'lowToHigh':
+      result.sort((a, b) => a.price - b.price);
+      break;
+    case 'highToLow':
+      result.sort((a, b) => b.price - a.price);
+      break;
+    case 'popularity':
+      // This is a simple popularity sort.
+      // It prioritizes products with a higher rating, and for products with the same rating, it prioritizes those with more reviews.
+      result.sort((a, b) => {
+        const ratingA = a.rating || 0;
+        const ratingB = b.rating || 0;
+        const reviewsA = a.numReviews || 0;
+        const reviewsB = b.numReviews || 0;
+
+        if (ratingB !== ratingA) {
+          return ratingB - ratingA;
+        }
+        return reviewsB - reviewsA;
+      });
+      break;
   }
 
   return result
@@ -221,3 +237,7 @@ if (process.client) {
   document.head.appendChild(script);
 }
 </script>
+
+<style scoped>
+/* Scoped styles */
+</style>

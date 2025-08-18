@@ -20,20 +20,16 @@
   <section class="w-full bg-white min-h-screen py-8">
     <Toast :message="toastMessage" :icon="toastIcon" :duration="toastDuration" :show="showToast" @close="showToast = false" />
     <OrderContactModal :visible="showOrderContactModal" @close="showOrderContactModal = false" />
-    <!-- Overlay for Cart Sidebar (mobile & desktop) -->
     <div v-if="showCart" class="fixed inset-0 bg-black bg-opacity-30 z-[10000]" @click="showCart = false"></div>
-    <!-- Cart Sidebar for mobile & desktop -->
     <CartSidebar :visible="showCart" :showCheckout="showCheckout" @close="showCart = false" @close-checkout="showCheckout = false" class="z-[10001]" />
     <Loader v-if="loading" />
     <template v-else>
-      <!-- Mobile Header -->
       <div class="md:hidden flex items-center justify-between px-4 py-2">
         <div class="flex items-center gap-4">
           <button class="text-2xl text-gray-700" @click="$router.back()"><i class="pi pi-arrow-left"></i></button>
           <img src="/images/photo7.jpg" alt="Brand Logo" class="h-8" />
         </div>
       </div>
-      <!-- Desktop Header -->
       <div class="hidden md:flex max-w-6xl mx-auto items-center justify-between px-4 mb-8">
         <div class="flex items-center gap-4">
           <button class="text-2xl text-gray-700 hover:text-green-600" @click="$router.back()">
@@ -41,9 +37,7 @@
           </button>
           <img src="/images/photo7.jpg" alt="Brand Logo" class="h-8" />
         </div>
-
       </div>
-      <!-- Mobile Product Details -->
       <div class="md:hidden px-4">
         <div class="flex flex-col items-center">
           <img :src="product.images[imageIndex]" :alt="product.title" class="w-full max-w-xs h-auto object-contain mx-auto" />
@@ -51,13 +45,10 @@
             <button v-for="(img, idx) in product.images" :key="idx" @click="imageIndex = idx" class="w-3 h-3 rounded-full" :class="imageIndex === idx ? 'bg-green-500' : 'bg-gray-300'" />
           </div>
         </div>
-        <h1 class="text-xl font-bold mt-4">{{ product.title }} <span class="text-base font-normal">| {{ product.weight }}</span></h1>
-  <!-- Ensure product.title is always present and fallback to a default if missing -->
-  <h1 class="text-xl font-bold mt-4">{{ product.title || 'Product' }} <span class="text-base font-normal">| {{ product.weight }}</span></h1>
-  <div class="text-green-700 font-semibold mb-2">Product from {{ product.brand }} →</div>
+        <h1 class="text-xl font-bold mt-4">{{ product.title || 'Product' }} <span class="text-base font-normal">| {{ product.weight }}</span></h1>
+        <div class="text-green-700 font-semibold mb-2">Product from {{ product.brand }} →</div>
         <span class="bg-green-100 text-green-700 px-2 py-1 rounded text-xs font-bold">{{ product.type }}</span>
         <div class="flex items-center gap-2 mt-2 mb-2">
-          <!-- Review Stars -->
           <div class="flex items-center mb-2">
             <span v-for="star in 5" :key="star" class="text-yellow-400 text-xl">
               <i :class="star <= (product.rating || 5) ? 'pi pi-star-fill' : 'pi pi-star'" />
@@ -69,6 +60,14 @@
           <span v-if="product.sale" class="bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs font-bold">SALE</span>
         </div>
         <div class="text-xs text-gray-500 mb-2">Tax Incl.</div>
+
+        <div v-if="product.flavours && product.flavours.length" class="mb-4">
+          <label for="flavor-select-mobile" class="block text-sm font-bold mb-1">Select Flavor:</label>
+          <select id="flavor-select-mobile" v-model="selectedFlavor" class="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm">
+            <option v-for="flavor in product.flavours" :key="flavor" :value="flavor">{{ flavor }}</option>
+          </select>
+        </div>
+
         <div class="mb-4">
           <h2 class="text-base font-bold mb-2">{{ product.title }}</h2>
           <div class="font-normal text-sm">
@@ -110,9 +109,7 @@
           <button class="bg-yellow-500 text-white px-8 py-3 rounded font-bold flex items-center gap-2 text-lg w-full mx-2" @click="buyNow" :disabled="loadingCart">Buy now</button>
         </div>
       </div>
-      <!-- Desktop Product Details -->
       <div class="hidden md:grid max-w-6xl mx-auto grid-cols-1 md:grid-cols-2 gap-12 items-start px-4">
-        <!-- ...existing code... -->
         <div class="flex flex-col items-center justify-center">
           <div class="relative w-full flex items-center justify-center">
             <div class="w-full flex items-center justify-center" style="height:600px;">
@@ -123,7 +120,6 @@
             </div>
           </div>
         </div>
-        <!-- ...existing code for desktop details... -->
         <div>
           <div class="flex items-center gap-2 mb-2">
             <h1 class="text-2xl md:text-3xl font-bold">{{ product.title || 'Product' }}</h1>
@@ -139,8 +135,15 @@
             <span v-if="product.oldPrice" class="text-lg text-gray-400 line-through">{{ product.oldPrice }}</span>
           </div>
           <div class="text-xs text-gray-500 mb-2">Tax Incl.</div>
+
+          <div v-if="product.flavours && product.flavours.length" class="mb-4">
+            <label for="flavor-select-desktop" class="block text-sm font-bold mb-1">Select Flavor:</label>
+            <select id="flavor-select-desktop" v-model="selectedFlavor" class="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm">
+              <option v-for="flavor in product.flavours" :key="flavor" :value="flavor">{{ flavor }}</option>
+            </select>
+          </div>
+
           <div class="flex items-center gap-4 mb-4">
-            <!-- Quantity Selector -->
             <div class="flex items-center gap-2">
               <button @click="decreaseQty" class="bg-gray-200 text-gray-700 px-3 py-2 rounded text-lg font-bold">-</button>
               <input type="number" v-model="quantity" min="1" class="w-12 text-center border border-gray-300 rounded py-2 text-lg" />
@@ -169,7 +172,7 @@
               <span v-if="brandText.length > 120 && !showFullBrand" class="text-green-600 text-xs cursor-pointer" @click="showFullBrand = true">See More</span>
               <span v-if="showFullBrand" class="text-green-600 text-xs cursor-pointer" @click="showFullBrand = false">See Less</span>
             </p>
-            </div>
+          </div>
           <div class="mt-6">
             <div class="text-xs font-bold mb-1">Disclaimer:</div>
             <ul class="text-xs text-gray-700 list-disc ml-4 mb-2">
@@ -224,6 +227,7 @@ const product = ref({
   thcPerDollar: '',
   cbdPerDollar: '',
   description: '',
+  flavours: [] as string[],
 })
 const imageIndex = ref(0)
 const quantity = ref(1)
@@ -233,6 +237,7 @@ const showFullDescription = ref(false)
 const showFullBrand = ref(false)
 const showFullDisclaimer = ref(false)
 const showFullWarning = ref(false)
+const selectedFlavor = ref(''); // NEW: State for selected flavor
 
 const brandText = `Fidels is known as an innovative, award-winning, California-based cannabis brand. Founded in 2017 as a pioneering vape company, Fidels evolved into so much more. Today, Fidels has become one of the world's most treasured cannabis brands with its class defining retail stores and amazing cannabis products. Always innovating, always inspiring, always influencing: that's Fidels.`
 const disclaimerList = [
@@ -260,13 +265,21 @@ function getSessionId() {
 async function addToCart() {
   loadingCart.value = true
   try {
+    const productData = {
+      product: route.params.id,
+      quantity: quantity.value
+    };
+
+    // If a flavor is selected, add it to the product data
+    if (selectedFlavor.value) {
+      productData.flavor = selectedFlavor.value;
+    }
+
     await axios.post('https://fidel-of6u.onrender.com/api/carts', {
       sessionId: getSessionId(),
-      products: [{
-        product: route.params.id,
-        quantity: quantity.value
-      }]
-    })
+      products: [productData]
+    });
+    
     toastMessage.value = 'Added to cart!'
     toastIcon.value = 'pi pi-check-circle'
     showToast.value = true
@@ -283,13 +296,21 @@ async function addToCart() {
 async function buyNow() {
   loadingCart.value = true
   try {
+    const productData = {
+      product: route.params.id,
+      quantity: quantity.value
+    };
+
+    // If a flavor is selected, add it to the product data
+    if (selectedFlavor.value) {
+      productData.flavor = selectedFlavor.value;
+    }
+
     await axios.post('https://fidel-of6u.onrender.com/api/carts', {
       sessionId: getSessionId(),
-      products: [{
-        product: route.params.id,
-        quantity: quantity.value
-      }]
-    })
+      products: [productData]
+    });
+
     showCart.value = true
     showCheckout.value = true
   } catch (err) {
@@ -331,6 +352,11 @@ onMounted(async () => {
       thcPerDollar: p.thcPerDollar || '',
       cbdPerDollar: p.cbdPerDollar || '',
       description: p.description || '',
+      flavours: p.flavours || [] as string[],
+    }
+    // Set the default selected flavor to the first one in the list, if available
+    if (product.value.flavours.length > 0) {
+      selectedFlavor.value = product.value.flavours[0];
     }
   } catch (err) {
     console.error('Failed to fetch product:', err)

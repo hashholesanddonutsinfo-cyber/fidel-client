@@ -106,7 +106,19 @@ const images = ref([
     alt: 'Premium Brands',
     title: 'Premium Brands',
     description: 'Trusted and reliable'
-  }
+  } 
+  // {
+  //   src: '/images/photo21.jpg',
+  //   alt: 'Luxury Selection',
+  //   title: 'Luxury Selection',
+  //   description: 'The best of the best'
+  // },
+  // {
+  //   src: '/images/photo22.jpg',
+  //   alt: 'Premium Brands',
+  //   title: 'Premium Brands',
+  //   description: 'Trusted and reliable'
+  // }
 ])
 
 const nextSlide = () => {
